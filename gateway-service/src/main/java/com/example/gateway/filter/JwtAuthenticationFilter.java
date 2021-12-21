@@ -5,11 +5,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpHeaders;
+//import org.apache.http.HttpHeaders;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
-import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             ServerHttpRequest request = exchange.getRequest();
             if(!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)){
                 //not token
-                return onError(exchange, "", HttpStatus.UNAUTHORIZED);
+                return onError(exchange, "1", HttpStatus.UNAUTHORIZED);
             }
 
             String authorization = Objects.requireNonNull(request.getHeaders().get(HttpHeaders.AUTHORIZATION)).get(0);
@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
             if(!validateToken(token)){
                 //error token
-                return onError(exchange, "", HttpStatus.UNAUTHORIZED);
+                return onError(exchange, "2", HttpStatus.UNAUTHORIZED);
             }
 
             return chain.filter(exchange);
