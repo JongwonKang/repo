@@ -12,4 +12,4 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/jongwonKang
+          uri: https://github.com/JongwonKang/repo/tree/master/config
